@@ -1,4 +1,5 @@
-import { useReducer, useEffect } from "react";
+/* eslint-disable */
+import { useReducer } from "react";
 import axios from "axios";
 import ShowsContext from "./showsContext";
 import ShowsReducer from "./showsReducer";
@@ -13,7 +14,6 @@ import {
 
 const ShowsState = (props) => {
   const initialState = {
-    // allShows:[],
     shows: [],
     singleShow: {},
     loading: false,

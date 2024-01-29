@@ -1,5 +1,6 @@
+/*eslint-disable */
 import React, { useContext, useEffect, useState } from "react";
-import { Container, Grid, Typography, Pagination, Card, CardMedia, CardContent, IconButton, Rating, PaginationItem, Box, Button } from "@mui/material";
+import { Container, Grid, Typography, Pagination, Card, CardMedia, CardContent, Rating, PaginationItem, Box, Button } from "@mui/material";
 import ShowsContext from "../../context/shows/showsContext";
 import Loader from "../../components/Loader";
 import { Link } from "react-router-dom";

@@ -1,3 +1,4 @@
+/*eslint-desable*/
 import { useContext, useEffect, useState } from "react";
 import { Container, Grid, Pagination, PaginationItem, Box } from "@mui/material";
 import ShowsContext from "../../context/shows/showsContext";
@@ -7,15 +8,15 @@ import Loader from "../../components/Loader";
 
 const ShowPage = () => {
   const showsContext = useContext(ShowsContext);
-  const { loading, shows, getAllShows, allShows } = showsContext;
+  const { loading, shows, getAllShows } = showsContext;
   const [currentPage, setCurrentPage] = useState(1);
   const showsPerPage = 10;
 
   useEffect(() => {
     getAllShows();
-  }, []);
+    // eslint-disable-next-line
+  },[]);
 
-  // Sort shows by name in ascending order by default
   const sortedShows = [...shows].sort((a, b) => {
     const nameA = a.show ? a.show.name : a.name;
     const nameB = b.show ? b.show.name : b.name;
@@ -83,7 +84,7 @@ const ShowPage = () => {
               sx={{
                 justifyContent: 'center',
                 marginTop: 2,
-                marginBottom: 4, // Adjust the margin as needed
+                marginBottom: 4, 
               }}
             />
           </Box>

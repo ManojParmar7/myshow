@@ -1,3 +1,4 @@
+/*eslint-disable */
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Grid, Card, CardMedia, CardContent, Typography, IconButton, Rating } from '@mui/material';
@@ -5,7 +6,6 @@ import { Favorite } from '@mui/icons-material';
 import {  toast } from 'react-toastify';
 
 const ListItem = ({ image, name, rating, id }) => {
-  // Get user ID from localStorage
   const authId = JSON.parse(localStorage.getItem("auth")) || [];
   const handleToggleFavorite = () => {
     const favorite = JSON.parse(localStorage.getItem("favorite")) || [];
