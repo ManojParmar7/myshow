@@ -8,7 +8,7 @@ import {
   Button,
   Badge,
 } from "@mui/material";
-import { Brightness2, Brightness5, ExitToApp, Favorite } from "@mui/icons-material";
+import { Brightness2, Brightness5,Home, ExitToApp, Favorite } from "@mui/icons-material";
 import ShowsContext from "../context/shows/showsContext";
 
 const Navbar = () => {
@@ -28,7 +28,11 @@ const handleFavoritesClick=()=>{
   navigate("/favorite");
 
 }
+const handleHomeClick = () => {
+  navigate("/");
+};
   const handleLogout = () => {
+    localStorage.removeItem("auth");
 
     navigate("/login");
 
@@ -45,8 +49,12 @@ useEffect(()=>{
     <div className={`navbar ${darkMode ? "dark-mode" : ""}`}>
       <AppBar position="static">
         <Toolbar>
+       
           <Typography variant="h6">TV Show App</Typography>
           <div style={{ marginLeft: "auto" }}>
+          <IconButton color="inherit" onClick={handleHomeClick}>
+            <Home />
+          </IconButton>
             <IconButton color="inherit" onClick={handleThemeToggle}>
               {darkMode ? <Brightness5 /> : <Brightness2 />}
             </IconButton>
@@ -57,9 +65,9 @@ useEffect(()=>{
             </IconButton>
 
 
-            {authId && authId.length == 0 ? <Button color="inherit" startIcon={<ExitToApp />} onClick={handleLogout}>
+            {authId && authId.length == 0 ? <Button color="inherit" startIcon={<ExitToApp />} onClick={handleLogin}>
               Log in
-            </Button> : <Button color="inherit" startIcon={<ExitToApp />} onClick={handleLogin}>
+            </Button> : <Button color="inherit" startIcon={<ExitToApp />} onClick={handleLogout}>
               Log out
             </Button>}
           </div>
