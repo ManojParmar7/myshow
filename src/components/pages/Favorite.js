@@ -19,7 +19,7 @@ const Favorite = () => {
     }
 
     toast.error("Removed from Favorites!");
-    setFavorites(localStorage.setItem('favorite', JSON.stringify(favorite))|| []);
+    setFavorites(favorite);
   };
 
   const showsContext = useContext(ShowsContext);
