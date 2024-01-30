@@ -5,10 +5,12 @@ import ShowsContext from "../../context/shows/showsContext";
 import Searchbar from "../../components/Searchbar";
 import ListItem from "../../components/ListItem";
 import Loader from "../../components/Loader";
-
+import NoImage from "../../components/images/download.jpg"
 const ShowPage = () => {
   const showsContext = useContext(ShowsContext);
   const { loading, shows, getAllShows } = showsContext;
+
+
   const [currentPage, setCurrentPage] = useState(1);
   const showsPerPage = 10;
 
@@ -48,7 +50,7 @@ const ShowPage = () => {
                     image={
                       item && item.show.image
                         ? item && item.show.image.medium
-                        : "https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg"
+                        : {NoImage}
                     }
                     name={item && item.show.name}
                     rating={

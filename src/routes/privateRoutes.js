@@ -1,14 +1,14 @@
 /*eslint-disable */
-import React from 'react';
-import {Navigate, Outlet} from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
+import ShowsContext from "../context/shows/showsContext";
 
 const PrivateRoute = () => {
+  const { allUsers, auth,  } = useContext(ShowsContext);
 
-  const checkdata = localStorage.getItem("auth");
+  const isAuthorized = allUsers.some(user => user.id == auth.id || user.email == auth.id);
 
-  return checkdata ? <Outlet /> : <Navigate to="/login" />;
-
-
+  return isAuthorized ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

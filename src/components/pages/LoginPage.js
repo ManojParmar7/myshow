@@ -1,11 +1,12 @@
 /*eslint-disable */
-import React, {useState } from "react";
+import React, {useState,useContext } from "react";
 import { Container, Typography, TextField, Button, Grid } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import {  toast } from 'react-toastify';
 import {  useNavigate,Link } from "react-router-dom";
+import ShowsContext from "../../context/shows/showsContext";
 
 const schema = yup.object({
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -13,6 +14,8 @@ const schema = yup.object({
 });
 
 const SigninPage = () => {
+  const {  allUsers,  login,  } = useContext(ShowsContext);
+
     const navigate = useNavigate();
 
   const [error, setError] = useState("");
@@ -25,24 +28,26 @@ const SigninPage = () => {
   });
 
   const onSubmit = (data) => {
-    const existingUsers = JSON.parse(localStorage.getItem("allUsers")) || [];
-    const user = existingUsers.find((user) => user.email === data.email);
-  
+    const user = allUsers.find((user) => user.email === data.email);
+
     if (user) {
       if (user.password === data.password) {
-  
         toast.success("Login successful!");
         navigate("/");
-        localStorage.setItem('auth', JSON.stringify(user));
-
         
+        // Use the login action to update the auth state
+        login(user);
+
+        localStorage.setItem('auth', JSON.stringify(user));
       } else {
-        toast.error("InCorrect Password!");
+        toast.error("Incorrect Password!");
       }
     } else {
-      toast.error("No users found. Please sign up.!");
+      toast.error("No users found. Please sign up!");
     }
   };
+
+  // ... existing code ...
   
 
   return (

@@ -2,7 +2,7 @@ import { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Rating } from "@mui/material";
 import ShowsContext from "../../context/shows/showsContext";
-import Loader from "../../components/Loader";
+import Skeleton from "react-loading-skeleton";
 
 const Singlepage = () => {
   const { id } = useParams();
@@ -25,7 +25,25 @@ const Singlepage = () => {
   return (
     <>
       {loading ? (
-        <Loader />
+        <div className="mainload">
+          <div className="left-col">
+                <div className="avatar">
+                        <Skeleton
+                           height={200} width={150}
+                            containerClassName="avatar-skeleton"
+                        />
+                        </div>
+                        </div>
+<div className="right-col">
+                <h3> <Skeleton /> </h3>
+                <p className="mb-0">
+                        <Skeleton count={4}  />
+                   
+                </p>
+            </div>
+            
+            </div>
+    
       ) : (
         <div className="singleshow">
           <img

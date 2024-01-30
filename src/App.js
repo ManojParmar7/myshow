@@ -3,6 +3,8 @@ import Routes from "./routes/index"
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import ShowsContext from "./context/shows/showsContext";
+import 'react-loading-skeleton/dist/skeleton.css'
+
 function App() {
   const { darkMode } = useContext(ShowsContext);
 

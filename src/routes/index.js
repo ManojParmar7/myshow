@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar';
 import SignupPage from '../components/pages/SignupPage';
 import Login from '../components/pages/LoginPage'
 import PrivateRoute from './privateRoutes'; // Import the PrivateRoute component
-import Favorite  from '../components/pages/Favorite';
+import Favorite  from '../components/pages/FavoritePage';
 
 function index() {
   return (

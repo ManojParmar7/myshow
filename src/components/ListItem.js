@@ -1,37 +1,35 @@
-/*eslint-disable */
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Container, Grid, Card, CardMedia, CardContent, Typography, IconButton, Rating } from '@mui/material';
+import {Grid, Card, CardMedia, CardContent, Typography, IconButton, Rating } from '@mui/material';
 import { Favorite } from '@mui/icons-material';
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+import ShowsContext from "../context/shows/showsContext";
 
 const ListItem = ({ image, name, rating, id }) => {
-  const authId = JSON.parse(localStorage.getItem("auth")) || [];
+  const { addToFavorites, removeFromFavorites, favorite ,auth} = useContext(ShowsContext);
+
+
   const handleToggleFavorite = () => {
-    const favorite = JSON.parse(localStorage.getItem("favorite")) || [];
-    const existFev = favorite.findIndex((show) => show.id === id);
-
-    if (existFev !== -1) {
-      favorite.splice(existFev, 1);
-      toast.error("Removed from Favorites!");
-
-    } else {
-
+    const updatedFavorites = favorite.filter((show) => show.id !== id || show.userId !== auth.id);
+  
+    if (updatedFavorites.length === favorite.length) {
+      // If the length is the same, it means the show wasn't in favorites, so we add it
       const newShow = {
         id: id,
-        userId: authId.id,
+        userId: auth.id,
         name: name,
         image: image,
         rating: rating,
       };
-
-      favorite.push(newShow);
-      toast.success("Add to Favorites!");
-
+      addToFavorites(newShow);
+      toast.success("Added to Favorites!");
+    } else {
+      // If the length is different, it means the show was in favorites, so we update the favorites list
+      removeFromFavorites(id);
+      toast.error("Removed from Favorites!");
     }
-
-    localStorage.setItem('favorite', JSON.stringify(favorite));
   };
+  
 
   return (
     <Grid item xs={12} sm={6} md={4}>
@@ -53,3 +51,4 @@ const ListItem = ({ image, name, rating, id }) => {
 };
 
 export default ListItem;
+

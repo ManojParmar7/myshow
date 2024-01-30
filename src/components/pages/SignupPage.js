@@ -1,10 +1,12 @@
-import React from "react";
+import {useContext} from "react";
 import { Container, Typography, TextField, Button, Grid } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import {  toast } from 'react-toastify';
 import {Link,useNavigate} from 'react-router-dom'
+import ShowsContext from "../../context/shows/showsContext";
+
 const schema = yup.object({
   name: yup.string().required("Full Name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -16,6 +18,8 @@ const schema = yup.object({
 });
 
 const SignupPage = () => {
+  const {  allUsers } = useContext(ShowsContext);
+
     const navigate = useNavigate()
   const {
     handleSubmit,
@@ -26,13 +30,11 @@ const SignupPage = () => {
   });
 
   const onSubmit = (data) => {
-    const existingUsers = JSON.parse(localStorage.getItem("allUsers")) || [];
-    const isEmailAlreadyExists = existingUsers.some(user => user.email === data.email);
+
+    const isEmailAlreadyExists = allUsers.some(user => user.email === data.email);
   
     if (isEmailAlreadyExists) {
         
-
-      
       return toast.error("User is already exist.!");
     }
   
@@ -46,15 +48,14 @@ const SignupPage = () => {
       password: data.password,
     };
   
-    existingUsers.push(newUser);
+    allUsers.push(newUser);
   
     // Update the users array in localStorage
-    localStorage.setItem("allUsers", JSON.stringify(existingUsers));
+    localStorage.setItem("allUsers", JSON.stringify(allUsers));
     toast.success("User register successfully!")
 
     navigate("/login");
 
-    console.log("Signup:", newUser);
   
     
   };
