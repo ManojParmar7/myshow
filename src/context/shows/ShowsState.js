@@ -32,6 +32,8 @@ const ShowsState = (props) => {
     favorite: localStorage.getItem("favorite")
       ? JSON.parse(localStorage.getItem("favorite"))
       : [], 
+      darkMode: localStorage.getItem("darkMode") === "true" ? true : false,
+
     loading: false,
   };
   
@@ -95,6 +97,9 @@ const ShowsState = (props) => {
   };
 
   const toggleTheme = () => {
+    const newDarkMode = !state.darkMode;
+    localStorage.setItem("darkMode", newDarkMode.toString());
+  
     dispatch({
       type: TOGGLE_THEME,
     });
@@ -109,7 +114,8 @@ const ShowsState = (props) => {
       const auth = authData ? JSON.parse(authData) : [];
       const favorite = favoriteData ? JSON.parse(favoriteData) : [];
       const allUsers = allUsersData ? JSON.parse(allUsersData) : [];
-  
+      const darkMode = localStorage.getItem("darkMode") 
+
       dispatch({
         type: INIT_AUTH_FAVORITE,
         payload: { auth, favorite, allUsers },

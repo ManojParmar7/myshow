@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -49,7 +50,7 @@ const Navbar = () => {
   };
 
   const countFavoritesForCurrentUser = () => {
-    const userFavorites = favorite.filter((show) => show.userId === auth.id);
+    const userFavorites = favorite.filter((show) => show.userId == auth.id);
     return userFavorites.length;
   };
 
@@ -128,7 +129,7 @@ const Navbar = () => {
               <ListItem icon={<ExitToApp />} text="Log out" onClick={handleLogout} />
             </>
           )}
-          {auth && auth.length === 0 && <ListItem icon={<LockOpenIcon />} text="Log in" onClick={handleLogin} />}
+          {auth && auth.length == 0 && <ListItem icon={<LockOpenIcon />} text="Log in" onClick={handleLogin} />}
         </List>
 
       </Drawer>

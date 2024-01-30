@@ -1,19 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext,useEffect } from "react";
 import { Link } from "react-router-dom";
-import {Grid, Card, CardMedia, CardContent, Typography, IconButton, Rating } from '@mui/material';
+import { Grid, Card, CardMedia, CardContent, Typography, IconButton, Rating } from '@mui/material';
 import { Favorite } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 import ShowsContext from "../context/shows/showsContext";
 
 const ListItem = ({ image, name, rating, id }) => {
-  const { addToFavorites, removeFromFavorites, favorite ,auth} = useContext(ShowsContext);
+  const { addToFavorites, removeFromFavorites, favorite, auth } = useContext(ShowsContext);
 
+  const isFavorite = favorite.some((show) => show.id === id && show.userId === auth.id);
 
   const handleToggleFavorite = () => {
-    const updatedFavorites = favorite.filter((show) => show.id !== id || show.userId !== auth.id);
-  
-    if (updatedFavorites.length === favorite.length) {
-      // If the length is the same, it means the show wasn't in favorites, so we add it
+    if (isFavorite) {
+      removeFromFavorites(id);
+      toast.error("Removed from Favorites!");
+    } else {
       const newShow = {
         id: id,
         userId: auth.id,
@@ -23,13 +24,10 @@ const ListItem = ({ image, name, rating, id }) => {
       };
       addToFavorites(newShow);
       toast.success("Added to Favorites!");
-    } else {
-      // If the length is different, it means the show was in favorites, so we update the favorites list
-      removeFromFavorites(id);
-      toast.error("Removed from Favorites!");
     }
   };
-  
+  useEffect(() => {    localStorage.setItem('favorite', JSON.stringify(favorite));
+}, [favorite, auth]);
 
   return (
     <Grid item xs={12} sm={6} md={4}>
@@ -41,7 +39,7 @@ const ListItem = ({ image, name, rating, id }) => {
         <CardContent>
           <Typography variant="h6">{name}</Typography>
           <Rating name={`rating-${id}`} value={rating / 2} max={10} precision={0.5} readOnly />
-          <IconButton onClick={handleToggleFavorite} aria-label="add to favorites">
+          <IconButton onClick={handleToggleFavorite} aria-label="add to favorites" color={isFavorite ? "error" : "default"}>
             <Favorite />
           </IconButton>
         </CardContent>
@@ -51,4 +49,3 @@ const ListItem = ({ image, name, rating, id }) => {
 };
 
 export default ListItem;
-
